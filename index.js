@@ -8,11 +8,11 @@ const path = require('path');
 const PORT = process.env.PORT || 3000;
 
 app.get('/boxplot.html', function(req, res){
-	res.sendFile(path.join(__dirname, '/projectors.html'));
+	res.sendFile(path.join(__dirname, '/boxplot.html'));
 });
 
 app.get('/input.html', function(req, res){
-	res.sendFile(path.join(__dirname, '/screens.html'));
+	res.sendFile(path.join(__dirname, '/input.html'));
 });
 
 server.listen(PORT);
