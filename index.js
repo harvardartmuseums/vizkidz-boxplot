@@ -23,7 +23,9 @@ var inputIO = io.of('/input-namespace');
 var data = [];
 
 plotIO.on('connection', function(socket) {
-	plotIO.to(socket.id).emit('data', data);
+	if (data.length > 0) {
+		plotIO.to(socket.id).emit('data', data);
+	}
 });
 
 inputIO.on('connection', function(socket) {
