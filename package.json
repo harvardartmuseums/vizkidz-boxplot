@@ -7,8 +7,8 @@
     "node": "7.2.0"
   },
   "dependencies": {
-    "express": "^4.15.2",
-    "socket.io": "^1.5.1"
+    "express": "4.15.2",
+    "socket.io": "1.5.1"
   },
   "devDependencies": {},
   "scripts": {
