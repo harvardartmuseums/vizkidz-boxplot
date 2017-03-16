@@ -30,5 +30,5 @@ inputIO.on('connection', function(socket) {
 	socket.on('newData', function(dataPoint) {
 		data.push(dataPoint);
 		plotIO.emit('newData', dataPoint);
-	);
+	});
 });
