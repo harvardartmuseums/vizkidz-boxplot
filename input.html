@@ -9,16 +9,160 @@
 <title>Bertie Boxplot</title>
 
 <style>
+body, html {
+	padding: 0px;
+	margin: 0px;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	background-color: #252525;
+	font-family: "Comic Sans", cursive, sans-serif;
+}
+body {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+div {
+	padding: 0px;
+	margin: 0px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	align-items: center;
+	font-size: 200%;
+	color: #FFF567;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	z-index: 2;
+}
+div span {
+	text-align: center;
+}
+
+@media screen and (orientation: portrait) {
+	body {
+		flex-direction: column;
+	}
+	div {
+		width: 80vw;
+		height: calc((100vh - 20vw)/3);
+	}
+	#ageinput {
+		height: calc(100% - .5em);
+	}
+	#firstwhisker {
+		top: calc(5vw - 2px);
+		left: 40vw;
+		width: 20vw;
+		height: 4px;
+	}
+	#connectingline {
+		top: 5vw;
+		left: calc(50vw - 2px);
+		width: 4px;
+		height: calc(100vh - 10vw);
+	}
+	#lastwhisker {
+		bottom: calc(5vw - 2px);
+		left: 40vw;
+		width: 20vw;
+		height: 4px;
+	}
+}
+
+@media screen and (orientation: landscape) {
+	body {
+		flex-direction: row;
+	}
+	div {
+		width: calc((100vw - 20vh)/3);
+		height: 80vh;
+	}
+	#ageinput {
+		height: calc(50%);
+	}
+	#firstwhisker {
+		left: calc(5vh - 2px);
+		top: 40vh;
+		height: 20vh;
+		width: 4px;
+	}
+	#connectingline {
+		left: 5vh;
+		top: calc(50vh - 2px);
+		height: 4px;
+		width: calc(100vw - 10vh);
+	}
+	#lastwhisker {
+		right: calc(5vh - 2px);
+		top: 40vh;
+		height: 20vh;
+		width: 4px;
+	}
+}
+
+#label {
+	background-color: #0372BD;
+}
+#inputcontainer {
+	background-color: #58C2AB;
+}
+#ageinput {
+	box-sizing: border-box;
+	width: calc(100% - .5em);
+	border: .125em solid #0372BD;
+	text-align: center;
+	transition: border .5s;
+	font-family: "Comic Sans", cursive, sans-serif;
+	font-size: 200%;
+	color: #0372BD;
+}
+#ageinput:focus {
+	border-color: #FFF567;
+	glow: none;
+	outline: none;
+}
+#submit {
+	background-color: #0372BD;
+	transition: color 1s, background-color 1s;
+}
+#submit:active {
+	color: #0372BD;
+	background-color: #FFF567;
+}
+.whisker {
+	position: absolute;
+	display: block;
+	padding: 0px;
+	margin: 0px;
+	background-color: #58C2AB;
+}
 </style>
 
 </head>
 
 <body>
-<input type="text" id="ageinput" onblur="submitAge()" />
+
+<div id="label"><span>Enter your age:</span></div>
+<div id="inputcontainer"><input type="text" id="ageinput" maxlength="3" type="number" onkeypress="preventLetters(event)" /></div>
+<div id="submit" onclick="submitAge()"><span>Submit!</span></div>
+
+<span class="whisker" id="firstwhisker"></span>
+<span class="whisker" id="connectingline"></span>
+<span class="whisker" id="lastwhisker"></span>
 
 <script src="/socket.io/socket.io.js"></script>
 <script>
 var socket = io('/input-namespace');
+
+function preventLetters(e) {
+	if ((e.key.length == 1) && !/[0-9]/.test(e.key)) {
+		e.preventDefault();
+	}
+}
 
 function submitAge() {
 	socket.emit('newData', document.getElementById("ageinput").value);
