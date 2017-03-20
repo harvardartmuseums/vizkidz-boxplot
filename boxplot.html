@@ -41,7 +41,7 @@ function initializeData(startData) {
 	if (startData.length > 0) {
 		data = startData.sort(function(a, b) {return a - b});
 		min = data[0];
-		max = data[-1];
+		max = data[data.length - 1];
 		setQuartiles();
 		visualizeData();
 	}
@@ -59,26 +59,32 @@ function addData(dataPoint) {
 function setQuartiles() {
 	var m;
 	var l = data.length;
-	switch (l%2) {
-		case 0:
-		case 2:
-			m = getMedian(data);
-			median = m.median;
-			firstQuart = getMedian(data.slice(0, m.index)).median;
-			thirdQuart = getMedian(data.slice(m.index)).median;
-			break;
-		case 1:
-			m = getMedian(data);
-			median = m.median;
-			firstQuart = .25*data[(l - 1)/4 - 1] + .75*data[(l - 1)/4];
-			thirdQuart = .75*data[3*(l - 1)/4] + .25*data[3*(l - 1)/4 + 1];
-			break;
-		case 3:
-			m = getMedian(data);
-			median = m.median;
-			firstQuart = .75*data[(l - 3)/4] + .25*data[(l - 3)/4 + 1];
-			thirdQuart = .25*data[3*(l - 3)/4 + 1] + .75*data[3*(l - 3)/4 + 2];
-			break;
+	if (l >= 4) {
+		switch (l%2) {
+			case 0:
+			case 2:
+				m = getMedian(data);
+				median = m.median;
+				firstQuart = getMedian(data.slice(0, m.index)).median;
+				thirdQuart = getMedian(data.slice(m.index)).median;
+				break;
+			case 1:
+				m = getMedian(data);
+				median = m.median;
+				firstQuart = .25*data[(l - 1)/4 - 1] + .75*data[(l - 1)/4];
+				thirdQuart = .75*data[3*(l - 1)/4] + .25*data[3*(l - 1)/4 + 1];
+				break;
+			case 3:
+				m = getMedian(data);
+				median = m.median;
+				firstQuart = .75*data[(l - 3)/4] + .25*data[(l - 3)/4 + 1];
+				thirdQuart = .25*data[3*(l - 3)/4 + 1] + .75*data[3*(l - 3)/4 + 2];
+				break;
+		}
+	} else {
+		median = getMedian(data).median;
+		firstQuart = min;
+		thirdQuart = max;
 	}
 }
 
