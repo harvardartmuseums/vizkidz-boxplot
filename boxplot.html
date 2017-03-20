@@ -61,6 +61,18 @@ div {
 	transition: top 1s, bottom 1s, left 1s, right 1s;
 }
 
+#box::before {
+	content: "first quartile of reported ages";
+	position: absolute;
+	right: -94%;
+}
+
+#box::after {
+	content: "third quartile of reported ages";
+	position: absolute;
+	right: -4%;
+}
+
 #midline {
 	position: absolute;
 	bottom: 0px;
@@ -70,6 +82,12 @@ div {
 	background-color: #58C2AB;
 	z-index: 4;
 	transition: top 1s, bottom 1s, left 1s, right 1s;
+}
+
+#midline::after {
+	content: "median reported age";
+	position: absolute;
+	right: -4%;
 }
 
 .whisker {
@@ -85,10 +103,22 @@ div {
 	width: 90%;
 }
 
+#topwhisker::after {
+	content: "heighest reported age";
+	position: absolute;
+	right: -4%;
+}
+
+#bottomwhisker::after {
+	content: "lowest reported age";
+	position: absolute;
+	right: -4%;
+}
+
 #connectingline {
 	height: 0%;
 	left: 54.5%;
-	right: 55.5%;
+	width: 1%;
 }
 
 </style>
