@@ -127,7 +127,7 @@ div {
 #title, #link, #dataPoints {
 	width: 100%;
 	height: 33.333333%;
-	display: flex-box;
+	display: flexbox;
 	flex-direction: column;
 	justify-content: space-around;
 	align-items: center;
@@ -153,7 +153,7 @@ div {
 http://vizkidz-boxplot.herokuapp.com/input.html</span>
 </div>
 <div id="dataPoints">
-<span></span>
+<span id="dataPointsText"></span>
 </div>
 </div>
 <div id="boxplot">
@@ -204,7 +204,7 @@ socket.on('newData', function(dataPoint) {
 });
 
 function initializeData(startData) {
-	document.getElementById("dataPoints").firstChild.innerHTML = startData.join(", ");
+	document.getElementById("dataPointsText").innerHTML = startData.join(", ");
 	if (startData.length > 0) {
 		data = startData.sort(function(a, b) {return a - b});
 		min = data[0];
@@ -215,7 +215,7 @@ function initializeData(startData) {
 }
 
 function addData(dataPoint) {
-	document.getElementById("dataPoints").firstChild.innerHTML += ", " + dataPoint;
+	document.getElementById("dataPointsText").innerHTML += ", " + dataPoint;
 	data.push(dataPoint);
 	data = data.sort(function(a, b) {return a - b});
 	min = data[0];
