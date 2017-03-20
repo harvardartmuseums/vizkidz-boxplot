@@ -20,14 +20,83 @@
 <script src="/socket.io/socket.io.js"></script>
 <script>
 var socket = io('/plot-namespace');
+var data = [];
+var min = 1000;
+var firstQuart = 0;
+var median = 0;
+var thirdQuart = 0;
+var max = -1;
 
-socket.on('data', function(data) {
-	document.getElementById("boxplot").innerHTML = data.join("<br />") + "<br />";
+socket.on('data', function(startData) {
+	initializeData(startData);
 });
 
 socket.on('newData', function(dataPoint) {
-	document.getElementById("boxplot").innerHTML += dataPoint + "<br />";
+	addData(dataPoint);
+	setQuartiles();
+	visualizeData();
 });
+
+function initializeData(startData) {
+	if (startData.length > 0) {
+		data = startData.sort(function(a, b) {return a - b});
+		min = data[0];
+		max = data[-1];
+		setQuartiles();
+		visualizeData();
+	}
+}
+
+function addData(dataPoint) {
+	data.push(dataPoint);
+	data = data.sort(function(a, b) {return a - b});
+	min = data[0];
+	max = data[-1];
+	setQuartiles();
+	visualizeData();
+}
+
+function setQuartiles() {
+	var m;
+	var l = data.length;
+	switch (l%2) {
+		case 0:
+		case 2:
+			m = getMedian(data);
+			median = m.median;
+			firstQuart = getMedian(data.slice(0, m.index)).median;
+			thirdQuart = getMedian(data.slice(m.index)).median;
+			break;
+		case 1:
+			m = getMedian(data);
+			median = m.median;
+			firstQuart = .25*data[(l - 1)/4 - 1] + .75*data[(l - 1)/4];
+			thirdQuart = .75*data[3*(l - 1)/4] + .25*data[3*(l - 1)/4 + 1];
+			break;
+		case 3:
+			m = getMedian(data);
+			median = m.median;
+			firstQuart = .75*data[(l - 3)/4] + .25*data[(l - 3)/4 + 1];
+			thirdQuart = .25*data[3*(l - 3)/4 + 1] + .75*data[3*(l - 3)/4 + 2];
+			break;
+	}
+}
+
+function getMedian(array) {
+	var r = {median: 0; index: 0;}
+	if (array.length%2 == 0) {
+		r.index = array.length/2;
+		r.median = (array[r.index] + array[r.index - 1]);
+	} else {
+		r.index = Math.floor(array.length/2);
+		r.median = array[r.index];
+	}
+}
+
+function visualizeData() {
+	var html = "min: " + min + " max: " + max + " 1st quart: " + firstQuart + " median: " + median + " 3rd quart: " + thirdQuart;
+	document.getElementById("boxplot").innerHTML = html;
+}
 </script>
 </body>
 </html>
