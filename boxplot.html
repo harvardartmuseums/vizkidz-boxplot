@@ -29,11 +29,11 @@ div {
 
 #boxplot {
 	position: absolute;
-	left: 33.3333333%;
+	left: 31.3333333%;
 	top: 0px;
 	margin: 2%;
-	width: 33.3333333%;
-	height: 100%;
+	width: 29.3333333%;
+	height: 96%;
 }
 
 #scale {
@@ -215,7 +215,7 @@ function visualizeData() {
 		setMarkers(scale, 10);
 	}
 	document.getElementById('box').style.top = (100 - max/scale*100) + "%";
-	document.getElementById('box').style.bottom = min/scale*100 + "%";
+	document.getElementById('box').style.height = min/scale*100 - (1 - max/scale*100) + "%";
 }
 </script>
 </body>
