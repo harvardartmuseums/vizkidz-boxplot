@@ -17,7 +17,7 @@ body, html {
 	overflow: hidden;
 	background-color: #252525;
 	color: #58C2AB;
-	font-family: "Comic Sans", "Helvetica", "Arial", sans-serif;
+	font-family: "Comic Sans", "Helvetica", sans-serif;
 }
 
 div {
@@ -34,7 +34,7 @@ div {
 	top: 0px;
 	margin: 2%;
 	width: 29.3333333%;
-	height: 96%;
+	height: calc(100% - 4vw);
 }
 
 #scale {
@@ -64,13 +64,13 @@ div {
 #box::before {
 	content: "first quartile of reported ages";
 	position: absolute;
-	left: 104%;
+	left: calc(100% + 4vw);
 }
 
 #box::after {
 	content: "third quartile of reported ages";
 	position: absolute;
-	left: 104%;
+	left: calc(100% + 4vw);
 }
 
 #midline {
@@ -87,7 +87,7 @@ div {
 #midline::after {
 	content: "median reported age";
 	position: absolute;
-	left: 104%;
+	left: calc(100% + 4vw);
 }
 
 .whisker {
@@ -106,13 +106,13 @@ div {
 #topwhisker::after {
 	content: "heighest reported age";
 	position: absolute;
-	left: 104%;
+	left: calc(100% + 4vw);
 }
 
 #bottomwhisker::after {
 	content: "lowest reported age";
 	position: absolute;
-	left: 104%;
+	left: calc(100% + 4vw);
 }
 
 #connectingline {
