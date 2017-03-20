@@ -92,7 +92,7 @@ function getMedian(array) {
 	var r = {median: 0, index: 0};
 	if (array.length%2 == 0) {
 		r.index = array.length/2;
-		r.median = (array[r.index] + array[r.index - 1]);
+		r.median = (parseInt(array[r.index]) + parseInt(array[r.index - 1]))/2;
 	} else {
 		r.index = Math.floor(array.length/2);
 		r.median = array[r.index];
