@@ -58,24 +58,7 @@ div {
 	height: 1%;
 	background-color: #0372BD;
 	z-index: 2;
-	transition: top 1s, bottom 1s, left 1s, right 1s;
-}
-
-#box::before {
-	content: "first quartile of reported ages";
-	white-space: pre-wrap;
-	position: absolute;
-	left: calc(100% + 4vw);
-	width: 29vw;
-}
-
-#box::after {
-	content: "third quartile of reported ages";
-	white-space: pre-wrap;
-	position: absolute;
-	left: calc(100% + 4vw);
-	width: 29vw;
-	bottom: 0px;
+	transition: top 1s, height 1s;
 }
 
 #midline {
@@ -86,22 +69,14 @@ div {
 	height: 1%;
 	background-color: #58C2AB;
 	z-index: 4;
-	transition: top 1s, bottom 1s, left 1s, right 1s;
-}
-
-#midline::after {
-	content: "median reported age";
-	white-space: pre-wrap;
-	position: absolute;
-	left: calc(100% + 4vw);
-	width: 29vw;
+	transition: top 1s;
 }
 
 .whisker {
 	position: absolute;
 	bottom: 0px;
 	background-color: #58C2AB;
-	transition: top 1s, bottom 1s, left 1s, right 1s;
+	transition: top 1s, height 1s;
 }
 
 #topwhisker, #bottomwhisker {
@@ -110,31 +85,26 @@ div {
 	width: 90%;
 }
 
-#topwhisker::after {
-	content: "heighest reported age";
-	white-space: pre-wrap;
-	position: absolute;
-	left: calc(100% + 4vw);
-	width: 29vw;
-}
-
-#bottomwhisker::after {
-	content: "lowest reported age";
-	white-space: pre-wrap;
-	position: absolute;
-	left: calc(100% + 4vw);
-	width: 29vw;
-}
-
 #connectingline {
 	height: 0%;
 	left: 54.5%;
 	width: 1%;
 }
 
+.label {
+	position: absolute;
+	left: 68.666666%;
+	width: 31.3333333%;
+	transition: top 1s;
+}
+
+#firstquartlabel, #thirdquartlabel {
+	color: #0372BD;
+}
+
 </style>
 
-<link href="https://fonts.googleapis.com/css?family=Permanent+Marker|Schoolbell" rel="stylesheet"> 
+<link href="https://fonts.googleapis.com/css?family=Schoolbell" rel="stylesheet"> 
 
 </head>
 
@@ -151,6 +121,16 @@ div {
 <div id="connectingline" class="whisker">
 </div>
 <div id="bottomwhisker" class="whisker">
+</div>
+<div id="minlabel" class="label">
+</div>
+<div id="maxlabel" class="label">
+</div>
+<div id="medianlabel" class="label">
+</div>
+<div id="firstquartlabel" class="label">
+</div>
+<div id="thirdquartlabel" class="label">
 </div>
 </div>
 
@@ -257,13 +237,45 @@ function visualizeData() {
 		scale += 10 - scale%10;
 		setMarkers(scale, 10);
 	}
-	document.getElementById('box').style.bottom = firstQuart/scale*100 + "%";
-	document.getElementById('box').style.height = ((thirdQuart - firstQuart)/scale)*100 + "%";
-	document.getElementById('midline').style.bottom = median/scale*100 - .5 + "%";
-	document.getElementById('topwhisker').style.bottom = max/scale*100 - .5 + "%";
-	document.getElementById('bottomwhisker').style.bottom = min/scale*100 - .5 + "%";
-	document.getElementById('connectingline').style.bottom = min/scale*100 + "%";
-	document.getElementById('connectingline').style.height = (max - min)/scale*100 + "%";
+
+	var maxPoint = max/scale*100;
+	var minPoint = min/scale*100;
+	var medianPoint = median/scale*100;
+	var firstQuartPoint = firstQuart/scale*100;
+	var thirdQuartPoint = thirdQuart/scale*100;
+
+	document.getElementById('box').style.bottom = firstQuartPoint + "%";
+	document.getElementById('box').style.height = (thirdQuartPoint - firstQuartPoint) + "%";
+	document.getElementById('midline').style.bottom = medianPoint - .5 + "%";
+	document.getElementById('topwhisker').style.bottom = maxPoint - .5 + "%";
+	document.getElementById('bottomwhisker').style.bottom = minPoint - .5 + "%";
+	document.getElementById('connectingline').style.bottom = minPoint + "%";
+	document.getElementById('connectingline').style.height = (maxPoint - minPoint) + "%";
+
+	document.getElementById('maxlabel').innerHTML = "heighest reported age, " + max;
+	document.getElementById('minlabel').innerHTML = "lowest reported age, " + min;
+	document.getElementById('medianlabel').innerHTML = "median reported age, " + median;
+	document.getElementById('firstquartlabel').innerHTML = "first quartile of reported ages, " + firstQuart;
+	document.getElementById('thirdquartlabel').innerHTML = "third quartile of reported ages, " + thirdQuart;
+
+	if ((firstQuartPoint - minPoint) < 4) {
+		firstQuartPoint = minPoint + 4;
+	}
+	if ((medianPoint - firstQuartPoint) < 4) {
+		medianPoint = firstQuartPoint + 4;
+	}
+	if ((thirdQuartPoint - medianPoint) < 4) {
+		thirdQuartPoint = medianPoint + 4;
+	}
+	if ((maxPoint - thirdQuartPoint) < 4) {
+		maxPoint = thirdQuartPoint + 4;
+	}
+
+	document.getElementById('maxlabel').style.top = maxPoint + "%";
+	document.getElementById('minlabel').style.top = minPoint + "%";
+	document.getElementById('medianlabel').style.top = medianPoint + "%";
+	document.getElementById('firstquartlabel').style.top = firstQuartPoint + "%";
+	document.getElementById('thirdquartlabel').style.top = thirdQuartPoint + "%";
 }
 </script>
 </body>
