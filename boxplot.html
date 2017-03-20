@@ -55,7 +55,7 @@ div {
 	top: 0px;
 	left: 10%;
 	width: 90%;
-	bottom: 0px;
+	height: 0%;
 	background-color: #0372BD;
 	z-index: 2;
 	transition: top 1s, bottom 1s, left 1s, right 1s;
@@ -215,7 +215,7 @@ function visualizeData() {
 		setMarkers(scale, 10);
 	}
 	document.getElementById('box').style.top = (1 - max/scale)*100 + "%";
-	document.getElementById('box').style.height = (min/scale - (1 - max/scale))*100 + "%";
+	document.getElementById('box').style.height = ((max - min)/scale)*100 + "%";
 }
 </script>
 </body>
