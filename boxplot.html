@@ -52,10 +52,10 @@ div {
 
 #box {
 	position: absolute;
-	top: 0px;
+	bottom: 0px;
 	left: 10%;
 	width: 90%;
-	height: 0%;
+	height: 1%;
 	background-color: #0372BD;
 	z-index: 2;
 	transition: top 1s, bottom 1s, left 1s, right 1s;
@@ -63,10 +63,10 @@ div {
 
 #midline {
 	position: absolute;
-	top: 0px;
-	left: 10%;
-	right: 100%;
 	bottom: 0px;
+	left: 10%;
+	width: 90%;
+	height: 1%;
 	background-color: #58C2AB;
 	z-index: 4;
 	transition: top 1s, bottom 1s, left 1s, right 1s;
@@ -74,7 +74,7 @@ div {
 
 .whisker {
 	position: absolute;
-	top: 0px;
+	bottom: 0px;
 	background-color: #58C2AB;
 	transition: top 1s, bottom 1s, left 1s, right 1s;
 }
@@ -82,11 +82,11 @@ div {
 #topwhisker, #bottomwhisker {
 	height: 1%;
 	left: 10%;
-	right: 100%;
+	width: 90%;
 }
 
 #connectingline {
-	bottom: 0%;
+	height: 0%;
 	left: 54.5%;
 	right: 55.5%;
 }
@@ -214,8 +214,13 @@ function visualizeData() {
 		scale += 10 - scale%10;
 		setMarkers(scale, 10);
 	}
-	document.getElementById('box').style.top = (1 - max/scale)*100 + "%";
-	document.getElementById('box').style.height = ((max - min)/scale)*100 + "%";
+	document.getElementById('box').style.bottom = firstQuart/scale*100 + "%";
+	document.getElementById('box').style.height = ((thirdQuart - firstQuart)/scale)*100 + "%";
+	document.getElementById('midline').style.bottom = median/scale*100 - .5 + "%";
+	document.getElementById('topwhisker').style.bottom = max/scale*100 - .5 + "%";
+	document.getElementById('bottomwhisker').style.bottom = min/scale*100 - .5 + "%";
+	document.getElementById('connectingline').style.bottom = min/scale*100 + "%";
+	document.getElementById('connectingline').style.height = (max - min)/scale*100 + "%";
 }
 </script>
 </body>
