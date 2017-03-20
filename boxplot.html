@@ -67,7 +67,7 @@ div {
 	height: 1%;
 	background-color: #0372BD;
 	z-index: 2;
-	transition: top 1s, height 1s;
+	transition: bottom 1s, height 1s;
 }
 
 #midline {
@@ -78,14 +78,14 @@ div {
 	height: 1%;
 	background-color: #58C2AB;
 	z-index: 4;
-	transition: top 1s;
+	transition: bottom 1s;
 }
 
 .whisker {
 	position: absolute;
 	bottom: 0px;
 	background-color: #58C2AB;
-	transition: top 1s, height 1s;
+	transition: bottom 1s, height 1s;
 }
 
 #topwhisker, #bottomwhisker {
@@ -104,11 +104,26 @@ div {
 	position: absolute;
 	left: 0%;
 	width: 100%;
-	transition: top 1s;
+	transition: bottom 1s;
 }
 
 #firstquartlabel, #thirdquartlabel {
 	color: #0372BD;
+}
+
+#title {
+	font-size: 300%;
+}
+
+#title, #link, #dataPoints {
+	display: flex-box;
+	flex-direction: column;
+	justify-content: space-around;
+	align-items: center;
+}
+
+#title span, #link span, #dataPoints span {
+	text-align: center;
 }
 
 </style>
@@ -118,6 +133,18 @@ div {
 </head>
 
 <body>
+<div id="data">
+<div id="title">
+<span>Who's visiting the museums?</span>
+</div>
+<div id="link">
+<span>Enter your own data here using your smart phone or tablet:<br /><br />
+http://vizkidz-boxplot.herokuapp.com/input.html</span>
+</div>
+<div id="dataPoints">
+<span></span>
+</div>
+</div>
 <div id="boxplot">
 <div id="scale">
 </div>
@@ -166,6 +193,7 @@ socket.on('newData', function(dataPoint) {
 });
 
 function initializeData(startData) {
+	document.getElementById(dataPoints).firstChild.innerHTML = startData.join(", ");
 	if (startData.length > 0) {
 		data = startData.sort(function(a, b) {return a - b});
 		min = data[0];
@@ -176,6 +204,7 @@ function initializeData(startData) {
 }
 
 function addData(dataPoint) {
+	document.getElementById(dataPoints).firstChild.innerHTML += ", " + dataPoint;
 	data.push(dataPoint);
 	data = data.sort(function(a, b) {return a - b});
 	min = data[0];
