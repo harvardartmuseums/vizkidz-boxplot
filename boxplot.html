@@ -51,7 +51,7 @@ function addData(dataPoint) {
 	data.push(dataPoint);
 	data = data.sort(function(a, b) {return a - b});
 	min = data[0];
-	max = data[-1];
+	max = data[data.length - 1];
 	setQuartiles();
 	visualizeData();
 }
