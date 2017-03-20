@@ -9,12 +9,100 @@
 <title>Bertie Boxplot</title>
 
 <style>
+body, html {
+	padding: 0px;
+	margin: 0px;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	background-color: #252525;
+	font-family: "Comic Sans", cursive, sans-serif;
+}
+
+div {
+	box-sizing: border-box;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+#boxplot {
+	position: absolute;
+	left: 33.3333333%;
+	top: 0px;
+	padding: 2%;
+	width: 33.3333333%;
+	height: 100%;
+}
+
+#scale {
+	position: absolute;
+	left: 0%;
+	top: 0%;
+	width: 10%;
+	height: 100%;
+}
+
+#box {
+	position: absolute;
+	top: 0px;
+	left: 10%;
+	right: 100%;
+	bottom: 0px;
+	background-color: #0372BD;
+	z-index: 2;
+	transition: top 1s, bottom 1s, left 1s, right 1s;
+}
+
+#midline {
+	position: absolute;
+	top: 0px;
+	left: 10%;
+	right: 100%;
+	bottom: 0px;
+	background-color: #58C2AB;
+	z-index: 4;
+	transition: top 1s, bottom 1s, left 1s, right 1s;
+}
+
+.whisker {
+	position: absolute;
+	top: 0px;
+	background-color: #58C2AB;
+	transition: top 1s, bottom 1s, left 1s, right 1s;
+}
+
+#topwhisker, #bottomwhisker {
+	height: 1%;
+	left: 10%;
+	right: 100%;
+}
+
+#connectingline {
+	bottom: 0%;
+	left: 54.5%;
+	right: 55.5%;
+}
+
 </style>
 
 </head>
 
 <body>
 <div id="boxplot">
+<div id="scale">
+</div>
+<div id="box">
+</div>
+<div id="midline">
+</div>
+<div id="topwhisker" class="whisker">
+</div>
+<div id="connectingline" class="whisker">
+</div>
+<div id="bottomwhisker" class="whisker">
+</div>
 </div>
 
 <script src="/socket.io/socket.io.js"></script>
@@ -100,9 +188,28 @@ function getMedian(array) {
 	return r;
 }
 
+function setMarkers(scale, unit) {
+	document.getElementById('scale').innerHTML = "";
+	for (i = 0; i <= scale/unit; i++) {
+		document.getElementById('scale').innerHTML += "<span id=\"scale" + i + "\">" + i*unit + "</span>";
+		document.getElementById('scale' + i).style.bottom = (i*unit/scale)*100 + "%";
+	}
+}
+
 function visualizeData() {
-	var html = "min: " + min + " max: " + max + " 1st quart: " + firstQuart + " median: " + median + " 3rd quart: " + thirdQuart;
-	document.getElementById("boxplot").innerHTML = html;
+	var scale = max;
+	if (max < 10) {
+		scale += 1;
+		setMarkers(scale, 1);
+	} else if (max < 50) {
+		scale += 5 - scale%5;
+		setMarkers(scale, 5);
+	} else {
+		scale += 10 - scale%10;
+		setMarkers(scale, 10);
+	}
+	document.getElementById('box').style.top = (100 - max/scale*100) + "%";
+	document.getElementById('box').style.bottom = min/scale*100 + "%";
 }
 </script>
 </body>
