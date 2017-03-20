@@ -196,7 +196,8 @@ function getMedian(array) {
 
 function setMarkers(scale, unit) {
 	document.getElementById('scale').innerHTML = "";
-	for (i = 0; i <= ; i++) {
+	alert("s: " + scale + " u: " + unit + " s/u: " + scale/unit);
+	for (i = 0; i <= scale/unit; i++) {
 		document.getElementById('scale').innerHTML += "<span id=\"scale" + i + "\">" + i*unit + "</span>";
 		document.getElementById('scale' + i).style.bottom = (i*unit/scale)*100 + "%";
 	}
@@ -205,7 +206,7 @@ function setMarkers(scale, unit) {
 function visualizeData() {
 	var scale = max;
 	if (max < 10) {
-		alert (scale);
+		alert(scale);
 		scale += 1;
 		setMarkers(scale, 1);
 	} else if (max < 50) {
