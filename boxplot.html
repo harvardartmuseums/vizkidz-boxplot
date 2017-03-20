@@ -46,6 +46,15 @@ div {
 	height: calc(100% - 4vw);
 }
 
+#data {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	margin: 2%;
+	width: 29.3333333%;
+	height: calc(100% - 4vw);
+}
+
 #scale {
 	position: absolute;
 	left: 0%;
@@ -112,10 +121,12 @@ div {
 }
 
 #title {
-	font-size: 300%;
+	font-size: 250%;
 }
 
 #title, #link, #dataPoints {
+	width: 100%;
+	height: 33.333333%;
 	display: flex-box;
 	flex-direction: column;
 	justify-content: space-around;
@@ -193,7 +204,7 @@ socket.on('newData', function(dataPoint) {
 });
 
 function initializeData(startData) {
-	document.getElementById(dataPoints).firstChild.innerHTML = startData.join(", ");
+	document.getElementById("dataPoints").firstChild.innerHTML = startData.join(", ");
 	if (startData.length > 0) {
 		data = startData.sort(function(a, b) {return a - b});
 		min = data[0];
@@ -204,7 +215,7 @@ function initializeData(startData) {
 }
 
 function addData(dataPoint) {
-	document.getElementById(dataPoints).firstChild.innerHTML += ", " + dataPoint;
+	document.getElementById("dataPoints").firstChild.innerHTML += ", " + dataPoint;
 	data.push(dataPoint);
 	data = data.sort(function(a, b) {return a - b});
 	min = data[0];
