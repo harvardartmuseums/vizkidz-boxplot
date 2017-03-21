@@ -106,6 +106,7 @@ div span {
 
 #label {
 	background-color: #0372BD;
+	cursor: default;
 }
 #inputcontainer {
 	background-color: #58C2AB;
@@ -128,6 +129,7 @@ div span {
 #submit {
 	background-color: #0372BD;
 	transition: color 1s, background-color 1s;
+	cursor: pointer;
 }
 #submit:active {
 	color: #0372BD;
@@ -167,8 +169,11 @@ function preventLetters(e) {
 }
 
 function submitAge() {
-	socket.emit('newData', document.getElementById("ageinput").value);
-	document.getElementById("ageinput").value = "";
+	var age = document.getElementById("ageinput").value;
+	if (age != "") {
+		socket.emit('newData', age);
+		document.getElementById("ageinput").value = "";
+	}
 }
 </script>
 </body>
