@@ -29,6 +29,16 @@ div {
 	user-select: none;
 }
 
+a {
+	color: #FFF567;
+	transition: color 1s;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #0372BD;
+}
+
 #inputURL {
 	cursor: pointer;
 }
@@ -220,7 +230,7 @@ function initializeData(startData) {
 }
 
 function addData(dataPoint) {
-	document.getElementById("dataPointsText").innerHTML += ", " + dataPoint;
+	document.getElementById("dataPointsText").innerHTML += ((data.length > 0)? ", " : "") + dataPoint;
 	data.push(dataPoint);
 	data = data.sort(function(a, b) {return a - b});
 	min = data[0];
