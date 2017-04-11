@@ -16,8 +16,9 @@ body, html {
 	height: 100%;
 	overflow: hidden;
 	background-color: #252525;
-	color: #58C2AB;
-	font-family: "Schoolbell", sans-serif;
+	color: #f6b0c3;
+	font-family: Futura, sans-serif;
+	text-transform: uppercase;
 	cursor: default;
 }
 
@@ -30,13 +31,14 @@ div {
 }
 
 a {
-	color: #FFF567;
+	color: #e2f2f2;
 	transition: color 1s;
 	text-decoration: none;
+	text-transform: none;
 }
 
 a:hover {
-	color: #0372BD;
+	color: #f6b0c3;
 }
 
 #inputURL {
@@ -89,7 +91,7 @@ a:hover {
 	left: 10%;
 	width: 90%;
 	height: 1%;
-	background-color: #0372BD;
+	background-color: #e2f2f2;
 	z-index: 2;
 	transition: bottom 1s, height 1s;
 }
@@ -100,7 +102,7 @@ a:hover {
 	left: 10%;
 	width: 90%;
 	height: 1%;
-	background-color: #58C2AB;
+	background-color: #f6b0c3;
 	z-index: 4;
 	transition: bottom 1s;
 }
@@ -108,7 +110,7 @@ a:hover {
 .whisker {
 	position: absolute;
 	bottom: 0px;
-	background-color: #58C2AB;
+	background-color: #f6b0c3;
 	transition: bottom 1s, height 1s;
 }
 
@@ -132,7 +134,7 @@ a:hover {
 }
 
 #firstquartlabel, #thirdquartlabel {
-	color: #0372BD;
+	color: #e2f2f2;
 }
 
 #title {
@@ -154,8 +156,6 @@ a:hover {
 
 </style>
 
-<link href="https://fonts.googleapis.com/css?family=Schoolbell" rel="stylesheet"> 
-
 </head>
 
 <body>
@@ -165,7 +165,7 @@ a:hover {
 </div>
 <div id="link">
 <span>Enter your own data here using your smart phone or tablet:<br /><br />
-<span id="inputURL"><a href="http://vizkidz-boxplot.herokuapp.com/input.html">http://vizkidz-boxplot.herokuapp.com/input.html</a></span></span>
+<span id="inputURL"><a href="http://vizkidz-boxplot.herokuapp.com/input.html" target="_blank">http://vizkidz-boxplot.herokuapp.com/input.html</a></span></span>
 </div>
 <div id="dataPoints">
 <span id="dataPointsText"></span>
