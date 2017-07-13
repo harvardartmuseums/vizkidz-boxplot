@@ -4,7 +4,7 @@
   "description": "A boxplot of visitors to the Harvard Art Museums",
   "main": "index.js",
   "engines": {
-    "node": "7.2.0"
+    "node": "7.10.1"
   },
   "dependencies": {
     "express": "4.15.2",
